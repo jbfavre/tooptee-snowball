@@ -1,0 +1,39 @@
+Description: Test data location in our source is different to upstream.
+Author: Stefano Rivera <stefanor@debian.org>
+Forwarded: not-needed
+Last-Update: 2011-02-05
+
+--- a/GNUmakefile
++++ b/GNUmakefile
+@@ -268,7 +268,7 @@
+ 
+ STEMWORDS=LD_LIBRARY_PATH=.:$(LD_LIBRARY_PATH) ./stemwords
+ 
+-check_utf8_%: ../data/% stemwords
++check_utf8_%: testdata/% stemwords
+ 	@echo "Checking output of `echo $<|sed 's!.*/!!'` stemmer with UTF-8"
+ 	@$(STEMWORDS) -c UTF_8 -l `echo $<|sed 's!.*/!!'` -i $</voc.txt -o tmp.txt
+ 	@diff -u $</output.txt tmp.txt
+@@ -279,19 +279,19 @@
+ 	fi
+ 	@rm tmp.txt
+ 
+-check_iso_8859_1_%: ../data/% stemwords
++check_iso_8859_1_%: testdata/% stemwords
+ 	@echo "Checking output of `echo $<|sed 's!.*/!!'` stemmer with ISO_8859_1"
+ 	@iconv -fUTF8 -tISO8859-1 $</voc.txt|$(STEMWORDS) -c ISO_8859_1 -l `echo $<|sed 's!.*/!!'` -o tmp.txt
+ 	@iconv -fUTF8 -tISO8859-1 $</output.txt|diff -u - tmp.txt
+ 	@rm tmp.txt
+ 
+-check_iso_8859_2_%: ../data/% stemwords
++check_iso_8859_2_%: testdata/% stemwords
+ 	@echo "Checking output of `echo $<|sed 's!.*/!!'` stemmer with ISO_8859_2"
+ 	@iconv -fUTF8 -tISO8859-2 $</voc.txt|$(STEMWORDS) -c ISO_8859_2 -l `echo $<|sed 's!.*/!!'` -o tmp.txt
+ 	@iconv -fUTF8 -tISO8859-2 $</output.txt|diff -u - tmp.txt
+ 	@rm tmp.txt
+ 
+-check_koi8r_%: ../data/% stemwords
++check_koi8r_%: testdata/% stemwords
+ 	@echo "Checking output of `echo $<|sed 's!.*/!!'` stemmer with KOI8R"
+ 	@iconv -fUTF8 -tKOI8R $</voc.txt|$(STEMWORDS) -c KOI8_R -l `echo $<|sed 's!.*/!!'` -o tmp.txt
+ 	@iconv -fUTF8 -tKOI8R $</output.txt|diff -u - tmp.txt
